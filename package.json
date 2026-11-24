@@ -1,0 +1,63 @@
+{
+  "name": "klm-pdf",
+  "productName": "KLM PDF",
+  "version": "1.3.0",
+  "description": "KLM PDF — pembaca & editor PDF offline",
+  "author": "KLM",
+  "license": "MIT",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis --x64 --publish never",
+    "dist:portable": "electron-builder --win portable --x64 --publish never",
+    "serve": "npx --yes http-server web -p 8080 -c-1"
+  },
+  "devDependencies": {
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.0"
+  },
+  "build": {
+    "appId": "com.klm.pdf",
+    "productName": "KLM PDF",
+    "copyright": "© 2026 KLM",
+    "directories": { "output": "dist", "buildResources": "build" },
+    "files": [
+      "electron/**",
+      "web/**",
+      "build/icon.png",
+      "package.json",
+      "!web/test*.pdf"
+    ],
+    "asar": true,
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "icon": "build/icon.ico",
+      "artifactName": "KLM-PDF-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "KLM-PDF-Portable-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "KLM PDF",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false
+    },
+    "fileAssociations": [
+      {
+        "ext": "pdf",
+        "name": "KLM.PDF",
+        "description": "Dokumen PDF",
+        "mimeType": "application/pdf",
+        "role": "Editor",
+        "icon": "build/pdf.ico"
+      }
+    ]
+  }
+}

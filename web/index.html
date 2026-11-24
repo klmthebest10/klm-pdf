@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KLM PDF</title>
+<meta name="description" content="KLM PDF — baca, edit, tanda tangani, gabung, dan atur file PDF. Bisa offline.">
+<meta name="theme-color" content="#1f1f1f">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="stylesheet" href="css/app.css">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('klmpdf.theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){}</script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M5 3h11l3 3v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M7 3v5h8V3M7 21v-7h10v7"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+  <symbol id="i-zoom-in" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></symbol>
+  <symbol id="i-zoom-out" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8 11h6"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-rotate-cw" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></symbol>
+  <symbol id="i-rotate-ccw" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></symbol>
+  <symbol id="i-cursor" viewBox="0 0 24 24"><path d="M5 3l6.5 17 2.4-7.1L21 10.5z"/></symbol>
+  <symbol id="i-hand" viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v6M10 10.5V6a2 2 0 0 0-4 0v8M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-6-2.4l-3.6-3.6a2 2 0 0 1 2.8-2.8L7 15"/></symbol>
+  <symbol id="i-type" viewBox="0 0 24 24"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></symbol>
+  <symbol id="i-edit-text" viewBox="0 0 24 24"><path d="M4 4h5M6.5 4v16M4 20h5M13 7h8M13 12h8M13 17h5"/></symbol>
+  <symbol id="i-highlight" viewBox="0 0 24 24"><path d="M9 11l-6 6v3h9l3-3"/><path d="M22 12l-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></symbol>
+  <symbol id="i-underline" viewBox="0 0 24 24"><path d="M6 4v6a6 6 0 0 0 12 0V4M4 20h16"/></symbol>
+  <symbol id="i-strike" viewBox="0 0 24 24"><path d="M16 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H7M4 12h16"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+  <symbol id="i-rect" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="1.5"/></symbol>
+  <symbol id="i-ellipse" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="7"/></symbol>
+  <symbol id="i-line" viewBox="0 0 24 24"><path d="M5 19L19 5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 19L19 5M10 5h9v9"/></symbol>
+  <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></symbol>
+  <symbol id="i-sign" viewBox="0 0 24 24"><path d="M3 16c3-2.5 3.8-9 6-9s-1 9 2 9 3-4.5 5-4.5 1 4.5 5 4.5M3 20.5h18"/></symbol>
+  <symbol id="i-whiteout" viewBox="0 0 24 24"><path d="M20 20H8l-5-5 9.5-9.5a2 2 0 0 1 2.8 0l4.2 4.2a2 2 0 0 1 0 2.8L12 20M6 11l7 7"/></symbol>
+  <symbol id="i-stamp" viewBox="0 0 24 24"><path d="M5 21h14M19.3 13.7A2.5 2.5 0 0 0 17.5 13h-11A2.5 2.5 0 0 0 4 15.5V17a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-1.5c0-.7-.3-1.3-.7-1.8zM14 13V8.5C14 7 15 7 15 5a3 3 0 0 0-6 0c0 2 1 2 1 3.5V13"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14L4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></symbol>
+  <symbol id="i-redo" viewBox="0 0 24 24"><path d="M15 14l5-5-5-5M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v5M14 11v5"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M4 16V5a1 1 0 0 1 1-1h11"/></symbol>
+  <symbol id="i-pages" viewBox="0 0 24 24"><path d="M9 3h8l4 4v10a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M4 7v12a2 2 0 0 0 2 2h10"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.1 15.9M14.5 14.5L20 20M8.1 8.1L12 12"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2l10 5-10 5L2 7z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></symbol>
+  <symbol id="i-file-plus" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M12 12v6M9 15h6"/></symbol>
+  <symbol id="i-file-out" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 15h7M12.5 12l3 3-3 3"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+  <symbol id="i-form" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12l3 3 5-6"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M12 16v-4.5M12 8h.01"/></symbol>
+  <symbol id="i-fit-width" viewBox="0 0 24 24"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></symbol>
+  <symbol id="i-fit-page" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-sidebar" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></symbol>
+  <symbol id="i-panel" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M15 3v18"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 2.7l5.7 5.7a8 8 0 1 1-11.3 0z"/></symbol>
+  <symbol id="i-hash" viewBox="0 0 24 24"><path d="M4 9h16M4 15h16M10 3L8 21M16 3l-2 18"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.5l3 6.2 6.8 1-4.9 4.8 1.2 6.8L12 18l-6.1 3.3 1.2-6.8-4.9-4.8 6.8-1z"/></symbol>
+  <symbol id="i-keyboard" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></symbol>
+  <symbol id="i-install" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M12 7v6M9 10l3 3 3-3M8 21h8M12 17v4"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><path d="M12 5h.01M12 12h.01M12 19h.01"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M3 12h18"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+  <symbol id="i-tools" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0 5 5l-9 9a2.1 2.1 0 0 1-3-3l9-9a4 4 0 0 1-2-2z"/><path d="M4 4l3 3M7 4v3H4"/></symbol>
+</svg>
+
+<div id="app">
+  <!-- ===== Title bar ===== -->
+  <header class="titlebar">
+    <div class="brand" data-cmd="home" title="Beranda">
+      <img src="icons/icon-32.png" alt="" width="22" height="22"><span>KLM PDF</span>
+    </div>
+    <nav class="menubar" id="menubar">
+      <div class="menu">
+        <button class="menu-btn">Berkas</button>
+        <div class="menu-pop">
+          <button data-cmd="open">Buka…<kbd>Ctrl+O</kbd></button>
+          <button data-cmd="new-blank">Dokumen kosong baru</button>
+          <button data-cmd="images-to-pdf">Buat PDF dari gambar…</button>
+          <button data-cmd="merge">Gabungkan beberapa PDF…</button>
+          <button data-cmd="scan">Scan dokumen (kamera / foto)…</button>
+          <hr>
+          <button data-cmd="save" data-doc>Simpan<kbd>Ctrl+S</kbd></button>
+          <button data-cmd="save-as" data-doc>Simpan sebagai…<kbd>Ctrl+Shift+S</kbd></button>
+          <button data-cmd="export-images" data-doc>Ekspor halaman ke gambar…</button>
+          <hr>
+          <button data-cmd="print" data-doc>Cetak…<kbd>Ctrl+P</kbd></button>
+          <button data-cmd="doc-props" data-doc>Properti dokumen…</button>
+          <button data-cmd="security" data-doc>Kata sandi &amp; keamanan…</button>
+          <hr>
+          <button data-cmd="close-tab" data-doc>Tutup tab<kbd>Ctrl+W</kbd></button>
+        </div>
+      </div>
+      <div class="menu">
+        <button class="menu-btn">Edit</button>
+        <div class="menu-pop">
+          <button data-cmd="undo" data-doc>Urungkan<kbd>Ctrl+Z</kbd></button>
+          <button data-cmd="redo" data-doc>Ulangi<kbd>Ctrl+Y</kbd></button>
+          <hr>
+          <button data-cmd="copy-annot" data-doc>Salin objek<kbd>Ctrl+C</kbd></button>
+          <button data-cmd="paste-annot" data-doc>Tempel objek<kbd>Ctrl+V</kbd></button>
+          <button data-cmd="dup-annot" data-doc>Duplikat objek<kbd>Ctrl+D</kbd></button>
+          <button data-cmd="delete-annot" data-doc>Hapus objek<kbd>Del</kbd></button>
+          <hr>
+          <button data-cmd="find" data-doc>Cari teks…<kbd>Ctrl+F</kbd></button>
+        </div>
+      </div>
+      <div class="menu">
+        <button class="menu-btn">Tampilan</button>
+        <div class="menu-pop">
+          <button data-cmd="zoom-in" data-doc>Perbesar<kbd>Ctrl++</kbd></button>
+          <button data-cmd="zoom-out" data-doc>Perkecil<kbd>Ctrl+−</kbd></button>
+          <button data-cmd="zoom-100" data-doc>Ukuran asli (100%)<kbd>Ctrl+1</kbd></button>
+          <button data-cmd="fit-width" data-doc>Paskan lebar<kbd>Ctrl+2</kbd></button>
+          <button data-cmd="fit-page" data-doc>Paskan halaman<kbd>Ctrl+0</kbd></button>
+          <hr>
+          <button data-cmd="toggle-sidebar" data-doc>Panel halaman<kbd>F4</kbd></button>
+          <button data-cmd="toggle-panel" data-doc>Panel alat</button>
+          <button data-cmd="organize" data-doc>Mode atur halaman</button>
+          <hr>
+          <button data-cmd="theme">Ganti tema terang/gelap</button>
+          <button data-cmd="fullscreen">Layar penuh<kbd>F11</kbd></button>
+        </div>
+      </div>
+      <div class="menu">
+        <button class="menu-btn">Alat</button>
+        <div class="menu-pop">
+          <button data-tool="edittext" data-doc>Edit teks PDF</button>
+          <button data-tool="text" data-doc>Tambah teks</button>
+          <button data-cmd="insert-image" data-doc>Sisipkan gambar…</button>
+          <button data-cmd="signature" data-doc>Tanda tangan…</button>
+          <button data-cmd="stamp" data-doc>Stempel…</button>
+          <button data-cmd="fill-form" data-doc>Isi formulir…</button>
+          <hr>
+          <button data-cmd="organize" data-doc>Atur halaman</button>
+          <button data-cmd="insert-pdf" data-doc>Sisipkan halaman dari PDF…</button>
+          <button data-cmd="extract" data-doc>Ekstrak halaman…</button>
+          <button data-cmd="split" data-doc>Pisah PDF…</button>
+          <hr>
+          <button data-cmd="watermark" data-doc>Watermark…</button>
+          <button data-cmd="page-numbers" data-doc>Nomor halaman…</button>
+        </div>
+      </div>
+      <div class="menu">
+        <button class="menu-btn">Bantuan</button>
+        <div class="menu-pop">
+          <button data-cmd="default-app">Jadikan aplikasi PDF default…</button>
+          <button data-cmd="shortcuts">Pintasan keyboard</button>
+          <button data-cmd="about">Tentang KLM PDF</button>
+        </div>
+      </div>
+    </nav>
+    <div class="tabs" id="tabs"></div>
+    <div class="tb-right">
+      <button class="btn-install" id="btnInstall" hidden data-cmd="install"><svg class="ic"><use href="#i-install"/></svg><span>Instal</span></button>
+      <button class="icon-btn" data-cmd="theme" title="Tema terang/gelap"><svg class="ic theme-ic"><use href="#i-moon"/></svg></button>
+    </div>
+  </header>
+
+  <!-- ===== Toolbar ===== -->
+  <div class="toolbar" id="toolbar" hidden>
+    <div class="tg">
+      <button class="icon-btn" data-cmd="toggle-sidebar" title="Panel halaman (F4)"><svg class="ic"><use href="#i-sidebar"/></svg></button>
+      <button class="icon-btn" data-cmd="save" title="Simpan (Ctrl+S)"><svg class="ic"><use href="#i-save"/></svg></button>
+      <button class="icon-btn" data-cmd="print" title="Cetak (Ctrl+P)"><svg class="ic"><use href="#i-print"/></svg></button>
+      <span class="sep"></span>
+      <button class="icon-btn" data-cmd="undo" id="btnUndo" title="Urungkan (Ctrl+Z)"><svg class="ic"><use href="#i-undo"/></svg></button>
+      <button class="icon-btn" data-cmd="redo" id="btnRedo" title="Ulangi (Ctrl+Y)"><svg class="ic"><use href="#i-redo"/></svg></button>
+    </div>
+    <div class="tg center">
+      <button class="icon-btn" data-cmd="prev-page" title="Halaman sebelumnya"><svg class="ic"><use href="#i-up"/></svg></button>
+      <button class="icon-btn" data-cmd="next-page" title="Halaman berikutnya"><svg class="ic"><use href="#i-down"/></svg></button>
+      <div class="pagebox"><input id="pageInput" type="text" inputmode="numeric" value="1" aria-label="Nomor halaman"><span>/ <b id="pageCount">1</b></span></div>
+      <span class="sep"></span>
+      <button class="icon-btn" data-cmd="zoom-out" title="Perkecil"><svg class="ic"><use href="#i-zoom-out"/></svg></button>
+      <select id="zoomSel" aria-label="Zoom">
+        <option value="fit-width">Paskan lebar</option>
+        <option value="fit-page">Paskan halaman</option>
+        <option value="0.5">50%</option><option value="0.75">75%</option><option value="1">100%</option>
+        <option value="1.25">125%</option><option value="1.5">150%</option><option value="2">200%</option>
+        <option value="3">300%</option><option value="4">400%</option>
+        <option value="custom" hidden>—</option>
+      </select>
+      <button class="icon-btn" data-cmd="zoom-in" title="Perbesar"><svg class="ic"><use href="#i-zoom-in"/></svg></button>
+      <button class="icon-btn hide-sm" data-cmd="fit-width" title="Paskan lebar"><svg class="ic"><use href="#i-fit-width"/></svg></button>
+      <button class="icon-btn hide-sm" data-cmd="fit-page" title="Paskan halaman"><svg class="ic"><use href="#i-fit-page"/></svg></button>
+      <span class="sep hide-sm"></span>
+      <button class="icon-btn hide-sm" data-cmd="rotate-ccw" title="Putar halaman ke kiri"><svg class="ic"><use href="#i-rotate-ccw"/></svg></button>
+      <button class="icon-btn hide-sm" data-cmd="rotate-cw" title="Putar halaman ke kanan"><svg class="ic"><use href="#i-rotate-cw"/></svg></button>
+    </div>
+    <div class="tg right">
+      <button class="icon-btn" data-cmd="scan" title="Scan dokumen"><svg class="ic"><use href="#i-scan"/></svg></button>
+      <button class="icon-btn" data-cmd="find" title="Cari (Ctrl+F)"><svg class="ic"><use href="#i-search"/></svg></button>
+      <button class="icon-btn" data-cmd="organize" id="btnOrganize" title="Atur halaman"><svg class="ic"><use href="#i-grid"/></svg></button>
+      <button class="icon-btn" data-cmd="toggle-panel" title="Semua alat"><svg class="ic"><use href="#i-panel"/></svg></button>
+    </div>
+  </div>
+
+  <main class="workspace">
+    <!-- ===== Home ===== -->
+    <section id="home" class="home">
+      <div class="home-inner">
+        <div class="hero">
+          <h1>Selamat datang di <span>KLM PDF</span></h1>
+          <p>Buka, edit, tanda tangani, dan atur PDF — langsung di komputer Anda, tanpa unggah ke internet.</p>
+        </div>
+        <div class="quick">
+          <button class="qcard primary" data-cmd="open"><svg class="ic"><use href="#i-folder"/></svg><b>Buka file PDF</b><small>atau tarik &amp; lepas di sini</small></button>
+          <button class="qcard" data-cmd="merge"><svg class="ic"><use href="#i-layers"/></svg><b>Gabungkan PDF</b><small>Satukan beberapa file</small></button>
+          <button class="qcard" data-cmd="scan"><svg class="ic"><use href="#i-scan"/></svg><b>Scan dokumen</b><small>Kamera atau foto → PDF rapi</small></button>
+          <button class="qcard" data-cmd="images-to-pdf"><svg class="ic"><use href="#i-image"/></svg><b>Gambar ke PDF</b><small>JPG, PNG, WEBP</small></button>
+          <button class="qcard" data-cmd="new-blank"><svg class="ic"><use href="#i-file-plus"/></svg><b>Dokumen kosong</b><small>Mulai dari halaman A4</small></button>
+          <button class="qcard" data-cmd="default-app"><svg class="ic"><use href="#i-star"/></svg><b>Jadikan default</b><small>Buka PDF langsung di KLM PDF</small></button>
+        </div>
+        <div class="recent-head"><h2>Terbaru</h2><button class="link" data-cmd="clear-recent">Bersihkan</button></div>
+        <div class="recent" id="recent"><p class="muted">Belum ada file. File yang Anda buka akan muncul di sini.</p></div>
+      </div>
+    </section>
+
+    <!-- ===== Document view ===== -->
+    <section id="docview" class="docview" hidden>
+      <aside class="toolrail" id="toolrail">
+        <button data-tool="select" title="Pilih (V)"><svg class="ic"><use href="#i-cursor"/></svg></button>
+        <button data-tool="hand" title="Geser (H)"><svg class="ic"><use href="#i-hand"/></svg></button>
+        <i></i>
+        <button data-tool="edittext" title="Edit teks PDF (E)"><svg class="ic"><use href="#i-edit-text"/></svg></button>
+        <button data-tool="text" title="Tambah teks (T)"><svg class="ic"><use href="#i-type"/></svg></button>
+        <i></i>
+        <button data-tool="highlight" title="Sorot (L)"><svg class="ic"><use href="#i-highlight"/></svg></button>
+        <button data-tool="underline" title="Garis bawah (U)"><svg class="ic"><use href="#i-underline"/></svg></button>
+        <button data-tool="strike" title="Coret (K)"><svg class="ic"><use href="#i-strike"/></svg></button>
+        <button data-tool="pen" title="Pena / gambar bebas (P)"><svg class="ic"><use href="#i-pen"/></svg></button>
+        <button data-tool="note" title="Catatan / komentar (N)"><svg class="ic"><use href="#i-note"/></svg></button>
+        <i></i>
+        <button data-tool="rect" title="Kotak (R)"><svg class="ic"><use href="#i-rect"/></svg></button>
+        <button data-tool="ellipse" title="Lingkaran (O)"><svg class="ic"><use href="#i-ellipse"/></svg></button>
+        <button data-tool="line" title="Garis"><svg class="ic"><use href="#i-line"/></svg></button>
+        <button data-tool="arrow" title="Panah (A)"><svg class="ic"><use href="#i-arrow"/></svg></button>
+        <i></i>
+        <button data-tool="whiteout" title="Penghapus putih / tutup area (W)"><svg class="ic"><use href="#i-whiteout"/></svg></button>
+        <button data-cmd="insert-image" title="Sisipkan gambar"><svg class="ic"><use href="#i-image"/></svg></button>
+        <button data-cmd="signature" title="Tanda tangan (S)"><svg class="ic"><use href="#i-sign"/></svg></button>
+        <button data-cmd="stamp" title="Stempel"><svg class="ic"><use href="#i-stamp"/></svg></button>
+      </aside>
+
+      <aside class="sidebar" id="sidebar">
+        <div class="side-tabs">
+          <button data-side="thumbs" class="on" title="Halaman"><svg class="ic"><use href="#i-pages"/></svg></button>
+          <button data-side="outline" title="Penanda (bookmark)"><svg class="ic"><use href="#i-bookmark"/></svg></button>
+          <button data-side="annots" title="Daftar anotasi"><svg class="ic"><use href="#i-list"/></svg></button>
+        </div>
+        <div class="side-body">
+          <div class="side-pane" id="pane-thumbs"><div class="thumbs" id="thumbs"></div></div>
+          <div class="side-pane" id="pane-outline" hidden><div id="outline" class="outline"></div></div>
+          <div class="side-pane" id="pane-annots" hidden><div id="annotList" class="annot-list"></div></div>
+        </div>
+      </aside>
+
+      <div class="viewer-wrap">
+        <div class="searchbar" id="searchbar" hidden>
+          <svg class="ic"><use href="#i-search"/></svg>
+          <input id="searchInput" type="search" placeholder="Cari di dokumen…" autocomplete="off">
+          <span id="searchInfo" class="muted"></span>
+          <label class="chk"><input type="checkbox" id="searchCase"> Aa</label>
+          <button class="icon-btn" data-cmd="search-prev" title="Sebelumnya (Shift+Enter)"><svg class="ic"><use href="#i-up"/></svg></button>
+          <button class="icon-btn" data-cmd="search-next" title="Berikutnya (Enter)"><svg class="ic"><use href="#i-down"/></svg></button>
+          <button class="icon-btn" data-cmd="search-close" title="Tutup (Esc)"><svg class="ic"><use href="#i-x"/></svg></button>
+        </div>
+        <div class="placebar" id="placebar" hidden><span id="placeText">Klik di halaman untuk menempatkan.</span><button class="btn sm" data-cmd="cancel-place">Batal</button></div>
+        <div class="viewer" id="viewer" tabindex="0"></div>
+        <div class="organizer" id="organizer" hidden>
+          <div class="org-bar">
+            <b>Atur Halaman</b><span class="muted" id="orgInfo"></span>
+            <span class="grow"></span>
+            <button class="btn sm" data-cmd="org-rotate-ccw"><svg class="ic"><use href="#i-rotate-ccw"/></svg>Putar kiri</button>
+            <button class="btn sm" data-cmd="org-rotate-cw"><svg class="ic"><use href="#i-rotate-cw"/></svg>Putar kanan</button>
+            <button class="btn sm" data-cmd="insert-blank"><svg class="ic"><use href="#i-file-plus"/></svg>Halaman kosong</button>
+            <button class="btn sm" data-cmd="insert-pdf"><svg class="ic"><use href="#i-plus"/></svg>Sisip PDF</button>
+            <button class="btn sm" data-cmd="dup-pages"><svg class="ic"><use href="#i-copy"/></svg>Duplikat</button>
+            <button class="btn sm" data-cmd="extract"><svg class="ic"><use href="#i-file-out"/></svg>Ekstrak</button>
+            <button class="btn sm" data-cmd="split"><svg class="ic"><use href="#i-scissors"/></svg>Pisah</button>
+            <button class="btn sm danger" data-cmd="delete-pages"><svg class="ic"><use href="#i-trash"/></svg>Hapus</button>
+            <button class="btn sm primary" data-cmd="organize">Selesai</button>
+          </div>
+          <div class="org-grid" id="orgGrid"></div>
+        </div>
+      </div>
+
+      <aside class="rightpanel" id="rightpanel">
+        <div id="props" class="props"></div>
+        <div class="alltools">
+          <h4>Edit PDF</h4>
+          <button data-tool="edittext"><svg class="ic"><use href="#i-edit-text"/></svg>Edit teks yang ada</button>
+          <button data-tool="text"><svg class="ic"><use href="#i-type"/></svg>Tambah teks</button>
+          <button data-cmd="insert-image"><svg class="ic"><use href="#i-image"/></svg>Sisipkan gambar</button>
+          <button data-tool="whiteout"><svg class="ic"><use href="#i-whiteout"/></svg>Tutup / hapus area</button>
+          <h4>Isi &amp; Tanda Tangan</h4>
+          <button data-cmd="signature"><svg class="ic"><use href="#i-sign"/></svg>Tanda tangan</button>
+          <button data-cmd="fill-form"><svg class="ic"><use href="#i-form"/></svg>Isi formulir</button>
+          <button data-cmd="insert-date"><svg class="ic"><use href="#i-calendar"/></svg>Tanggal hari ini</button>
+          <div class="sym-row">
+            <button data-cmd="sym-check" title="Centang">✓</button>
+            <button data-cmd="sym-cross" title="Silang">✗</button>
+            <button data-cmd="sym-dot" title="Titik">●</button>
+          </div>
+          <button data-cmd="stamp"><svg class="ic"><use href="#i-stamp"/></svg>Stempel</button>
+          <h4>Atur Halaman</h4>
+          <button data-cmd="organize"><svg class="ic"><use href="#i-grid"/></svg>Atur / urutkan halaman</button>
+          <button data-cmd="insert-blank"><svg class="ic"><use href="#i-file-plus"/></svg>Sisip halaman kosong</button>
+          <button data-cmd="insert-pdf"><svg class="ic"><use href="#i-layers"/></svg>Gabung / sisip PDF</button>
+          <button data-cmd="scan"><svg class="ic"><use href="#i-scan"/></svg>Scan halaman</button>
+          <button data-cmd="extract"><svg class="ic"><use href="#i-file-out"/></svg>Ekstrak halaman</button>
+          <button data-cmd="split"><svg class="ic"><use href="#i-scissors"/></svg>Pisah PDF</button>
+          <button data-cmd="delete-pages"><svg class="ic"><use href="#i-trash"/></svg>Hapus halaman</button>
+          <h4>Lainnya</h4>
+          <button data-cmd="watermark"><svg class="ic"><use href="#i-drop"/></svg>Watermark</button>
+          <button data-cmd="page-numbers"><svg class="ic"><use href="#i-hash"/></svg>Nomor halaman</button>
+          <button data-cmd="export-images"><svg class="ic"><use href="#i-download"/></svg>Ekspor ke gambar</button>
+          <button data-cmd="doc-props"><svg class="ic"><use href="#i-info"/></svg>Properti dokumen</button>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="statusbar" id="statusbar">
+    <span id="stFile">Siap</span>
+    <span class="grow"></span>
+    <span id="stSel"></span>
+    <span id="stPage"></span>
+    <span id="stZoom"></span>
+  </footer>
+</div>
+
+<!-- ===== Overlays ===== -->
+<div class="dropzone" id="dropzone" hidden><div><svg class="ic"><use href="#i-download"/></svg><b>Lepaskan file di sini</b><small>PDF dibuka di tab baru · gambar disisipkan ke halaman</small></div></div>
+<div class="busy" id="busy" hidden><div class="spinner"></div><span id="busyText">Memproses…</span></div>
+<div class="toasts" id="toasts"></div>
+<div class="ctxmenu" id="ctxmenu" hidden></div>
+<input type="file" id="filePdf" accept="application/pdf,.pdf" multiple hidden>
+<input type="file" id="fileImg" accept="image/*" multiple hidden>
+
+<!-- Generic confirm -->
+<dialog id="dlgConfirm" class="dlg">
+  <form method="dialog">
+    <h3 id="cfTitle"></h3>
+    <p id="cfMsg"></p>
+    <div class="dlg-actions" id="cfBtns"></div>
+  </form>
+</dialog>
+
+<!-- Generic prompt -->
+<dialog id="dlgPrompt" class="dlg">
+  <form method="dialog" id="pfForm">
+    <h3 id="pfTitle"></h3>
+    <label class="field"><span id="pfLabel"></span><input id="pfInput" autocomplete="off"></label>
+    <textarea id="pfArea" rows="5" hidden></textarea>
+    <div class="dlg-actions"><button value="cancel" class="btn">Batal</button><button value="ok" class="btn primary" id="pfOk">OK</button></div>
+  </form>
+</dialog>
+
+<!-- Signature -->
+<dialog id="dlgSign" class="dlg wide">
+  <form method="dialog">
+    <h3>Tanda Tangan</h3>
+    <div class="seg" id="signTabs">
+      <button type="button" data-st="draw" class="on">Gambar</button>
+      <button type="button" data-st="type">Ketik</button>
+      <button type="button" data-st="upload">Unggah</button>
+    </div>
+    <div class="sign-pane" data-sp="draw">
+      <canvas id="signPad" width="900" height="300"></canvas>
+      <div class="row">
+        <label>Warna <input type="color" id="signColor" value="#0b2a8c"></label>
+        <label>Tebal <input type="range" id="signWidth" min="1" max="8" step="0.5" value="3"></label>
+        <span class="grow"></span>
+        <button type="button" class="btn sm" id="signClear">Bersihkan</button>
+      </div>
+    </div>
+    <div class="sign-pane" data-sp="type" hidden>
+      <input id="signText" class="big-input" placeholder="Ketik nama Anda" autocomplete="off">
+      <div class="sign-fonts" id="signFonts"></div>
+    </div>
+    <div class="sign-pane" data-sp="upload" hidden>
+      <div class="upload-box" id="signUpload">Klik untuk memilih gambar tanda tangan (PNG transparan paling bagus)</div>
+      <label class="chk"><input type="checkbox" id="signRemoveBg" checked> Hapus latar putih otomatis</label>
+    </div>
+    <div class="saved-sigs-wrap">
+      <span class="muted">Tersimpan:</span>
+      <div class="saved-sigs" id="savedSigs"></div>
+    </div>
+    <div class="dlg-actions">
+      <label class="chk left"><input type="checkbox" id="signSave" checked> Simpan untuk dipakai lagi</label>
+      <button value="cancel" class="btn">Batal</button>
+      <button type="button" class="btn primary" id="signUse">Tempatkan</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Stamp -->
+<dialog id="dlgStamp" class="dlg">
+  <form method="dialog">
+    <h3>Stempel</h3>
+    <div class="stamp-grid" id="stampGrid"></div>
+    <div class="row">
+      <label class="field grow"><span>Teks kustom</span><input id="stampText" placeholder="mis. SUDAH DIPERIKSA"></label>
+      <label class="field"><span>Warna</span><input type="color" id="stampColor" value="#c0262d"></label>
+    </div>
+    <label class="chk"><input type="checkbox" id="stampDate" checked> Tambahkan tanggal</label>
+    <div class="dlg-actions"><button value="cancel" class="btn">Batal</button><button type="button" class="btn primary" id="stampUse">Tempatkan teks kustom</button></div>
+  </form>
+</dialog>
+
+<!-- Watermark -->
+<dialog id="dlgWatermark" class="dlg">
+  <form method="dialog">
+    <h3>Watermark</h3>
+    <label class="field"><span>Teks</span><input id="wmText" value="RAHASIA"></label>
+    <div class="row">
+      <label class="field"><span>Ukuran</span><input type="number" id="wmSize" value="72" min="8" max="300"></label>
+      <label class="field"><span>Sudut (°)</span><input type="number" id="wmAngle" value="45" min="-180" max="180"></label>
+      <label class="field"><span>Warna</span><input type="color" id="wmColor" value="#c0262d"></label>
+      <label class="field"><span>Transparansi</span><input type="range" id="wmOpacity" min="0.05" max="1" step="0.05" value="0.2"></label>
+    </div>
+    <label class="field"><span>Halaman</span><select id="wmPages"><option value="all">Semua halaman</option><option value="cur">Halaman ini saja</option></select></label>
+    <div class="dlg-actions"><button value="cancel" class="btn">Batal</button><button value="ok" class="btn primary">Tambahkan</button></div>
+  </form>
+</dialog>
+
+<!-- Page numbers -->
+<dialog id="dlgPagenum" class="dlg">
+  <form method="dialog">
+    <h3>Nomor Halaman</h3>
+    <label class="field"><span>Format</span><select id="pnFormat">
+      <option value="{n}">1, 2, 3 …</option>
+      <option value="Halaman {n}">Halaman 1</option>
+      <option value="Halaman {n} dari {t}">Halaman 1 dari 10</option>
+      <option value="{n} / {t}">1 / 10</option>
+      <option value="- {n} -">- 1 -</option>
+    </select></label>
+    <div class="row">
+      <label class="field"><span>Posisi</span><select id="pnPos">
+        <option value="bc">Bawah tengah</option><option value="br">Bawah kanan</option><option value="bl">Bawah kiri</option>
+        <option value="tc">Atas tengah</option><option value="tr">Atas kanan</option><option value="tl">Atas kiri</option>
+      </select></label>
+      <label class="field"><span>Ukuran</span><input type="number" id="pnSize" value="10" min="6" max="48"></label>
+      <label class="field"><span>Mulai dari</span><input type="number" id="pnStart" value="1" min="0"></label>
+      <label class="field"><span>Lewati halaman awal</span><input type="number" id="pnSkip" value="0" min="0"></label>
+    </div>
+    <div class="dlg-actions"><button value="cancel" class="btn">Batal</button><button value="ok" class="btn primary">Tambahkan</button></div>
+  </form>
+</dialog>
+
+<!-- Split -->
+<dialog id="dlgSplit" class="dlg">
+  <form method="dialog">
+    <h3>Pisah PDF</h3>
+    <label class="radio"><input type="radio" name="splitMode" value="each" checked> Setiap halaman jadi file terpisah</label>
+    <label class="radio"><input type="radio" name="splitMode" value="every"> Setiap <input type="number" id="splitN" value="2" min="1" class="tiny"> halaman</label>
+    <label class="radio"><input type="radio" name="splitMode" value="ranges"> Rentang kustom <input id="splitRanges" placeholder="1-3, 4-6, 7" class="mid"></label>
+    <p class="muted small">Hasil disimpan sebagai satu file ZIP berisi beberapa PDF.</p>
+    <div class="dlg-actions"><button value="cancel" class="btn">Batal</button><button value="ok" class="btn primary">Pisahkan</button></div>
+  </form>
+</dialog>
+
+<!-- Export images -->
+<dialog id="dlgExport" class="dlg">
+  <form method="dialog">
+    <h3>Ekspor ke Gambar</h3>
+    <div class="row">
+      <label class="field"><span>Format</span><select id="exFormat"><option value="png">PNG</option><option value="jpg">JPG</option></select></label>
+      <label class="field"><span>Resolusi</span><select id="exDpi"><option value="96">96 DPI (layar)</option><option value="150" selected>150 DPI</option><option value="300">300 DPI (cetak)</option></select></label>
+    </div>
+    <label class="field"><span>Halaman</span><input id="exRange" placeholder="Kosongkan = semua. Contoh: 1-3, 5"></label>
+    <div class="dlg-actions"><button value="cancel" class="btn">Batal</button><button value="ok" class="btn primary">Ekspor</button></div>
+  </form>
+</dialog>
+
+<!-- Document properties -->
+<dialog id="dlgProps" class="dlg">
+  <form method="dialog">
+    <h3>Properti Dokumen</h3>
+    <div class="kv" id="propInfo"></div>
+    <label class="field"><span>Judul</span><input id="mTitle"></label>
+    <label class="field"><span>Penulis</span><input id="mAuthor"></label>
+    <label class="field"><span>Subjek</span><input id="mSubject"></label>
+    <label class="field"><span>Kata kunci</span><input id="mKeywords" placeholder="pisahkan dengan koma"></label>
+    <div class="dlg-actions"><button value="cancel" class="btn">Tutup</button><button value="ok" class="btn primary">Terapkan</button></div>
+  </form>
+</dialog>
+
+<!-- Print -->
+<dialog id="dlgPrint" class="dlg print">
+  <form method="dialog" onsubmit="return false">
+    <div class="scan-head"><h3>Cetak</h3><span class="muted small ellip" id="prTitle"></span><span class="grow"></span><button type="button" class="icon-btn" id="prX" onclick="this.closest('dialog').close()" title="Tutup (Esc)"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="pr-body">
+      <div class="pr-opts">
+        <div id="prNativeRows">
+          <label class="field"><span>Printer</span><select id="prPrinter"></select></label>
+          <div class="row">
+            <label class="field"><span>Salinan</span><input type="number" id="prCopies" min="1" max="999" value="1" class="w80"></label>
+            <label class="chk pr-mt"><input type="checkbox" id="prCollate" checked> Susun per set</label>
+          </div>
+          <label class="field"><span>Bolak-balik (duplex)</span><select id="prDuplex"><option value="simplex">Satu sisi</option><option value="longEdge">Dua sisi — balik sisi panjang</option><option value="shortEdge">Dua sisi — balik sisi pendek</option></select></label>
+        </div>
+        <p class="note-box" id="prBrowserNote">Printer, jumlah salinan &amp; bolak-balik dipilih di dialog cetak browser setelah menekan <b>Cetak</b>.</p>
+
+        <fieldset><legend>Halaman <span class="muted">(dokumen <span id="prPageCount"></span> hal.)</span></legend>
+          <label class="radio"><input type="radio" name="prRange" value="all" checked> Semua</label>
+          <label class="radio"><input type="radio" name="prRange" value="current"> Halaman saat ini (<span id="prCurNum"></span>)</label>
+          <label class="radio" id="prSelectedLbl"><input type="radio" name="prRange" value="selected" id="prSelected"> Halaman yang dipilih di panel</label>
+          <label class="radio"><input type="radio" name="prRange" value="range"> <input id="prRangeText" class="mid" placeholder="mis. 1-3, 5, 8-"></label>
+          <div class="row">
+            <select id="prSubset" aria-label="Ganjil/genap"><option value="all">Ganjil &amp; genap</option><option value="odd">Hanya ganjil</option><option value="even">Hanya genap</option></select>
+            <label class="chk"><input type="checkbox" id="prReverse"> Urutan terbalik</label>
+          </div>
+        </fieldset>
+
+        <fieldset><legend>Kertas &amp; tata letak</legend>
+          <label class="field"><span>Ukuran kertas</span><select id="prPaper"></select></label>
+          <div class="row">
+            <label class="field grow"><span>Orientasi</span><select id="prOrient"><option value="auto">Otomatis</option><option value="portrait">Potret</option><option value="landscape">Lanskap</option></select></label>
+            <label class="field grow"><span>Halaman per lembar</span><select id="prPerSheet"><option value="1">1</option><option value="2">2</option><option value="4">4</option><option value="6">6</option><option value="9">9</option><option value="16">16</option></select></label>
+          </div>
+          <label class="radio"><input type="radio" name="prScale" value="fit" checked> Sesuaikan dengan kertas</label>
+          <label class="radio"><input type="radio" name="prScale" value="shrink"> Perkecil halaman yang terlalu besar</label>
+          <label class="radio"><input type="radio" name="prScale" value="actual"> Ukuran asli (100%)</label>
+          <label class="radio"><input type="radio" name="prScale" value="custom"> Skala <input type="number" id="prCustomPct" class="tiny" min="10" max="400" value="100"> %</label>
+          <label class="chk"><input type="checkbox" id="prAutoRotate" checked> Putar otomatis mengikuti kertas</label>
+          <label class="chk"><input type="checkbox" id="prBorders" checked> Garis tepi tiap halaman</label>
+        </fieldset>
+
+        <fieldset><legend>Hasil</legend>
+          <div class="row">
+            <label class="field grow"><span>Warna</span><select id="prColor"><option value="color">Berwarna</option><option value="gray">Hitam-putih</option></select></label>
+            <label class="field grow"><span>Kualitas</span><select id="prQuality"><option value="150">Draf (150 dpi)</option><option value="200">Normal (200 dpi)</option><option value="300">Tinggi (300 dpi)</option></select></label>
+          </div>
+          <label class="chk"><input type="checkbox" id="prMarkup" checked> Cetak anotasi (sorotan, coretan, komentar, bentuk)</label>
+        </fieldset>
+      </div>
+      <div class="pr-prev">
+        <div class="pr-prevbox" id="prPreviewBox"><canvas id="prCanvas"></canvas><div class="pr-loading" id="prLoading" hidden><div class="spinner sm"></div></div></div>
+        <div class="row center pr-nav">
+          <button type="button" class="icon-btn" id="prPrev" title="Lembar sebelumnya"><svg class="ic"><use href="#i-left"/></svg></button>
+          <span id="prNav">–</span>
+          <button type="button" class="icon-btn" id="prNext" title="Lembar berikutnya"><svg class="ic"><use href="#i-right"/></svg></button>
+        </div>
+        <p class="muted small center-text" id="prSummary"></p>
+        <p class="pr-err" id="prErr"></p>
+      </div>
+    </div>
+    <div class="dlg-actions">
+      <span class="pr-progress left" id="prProgress" hidden></span>
+      <button type="button" class="btn left-auto" id="prSystem" title="Pakai dialog printer Windows (pengaturan khusus printer)">Dialog printer Windows…</button>
+      <button type="button" class="btn" id="prCancel">Batal</button>
+      <button type="button" class="btn primary" id="prGo">Cetak</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Scan -->
+<dialog id="dlgScan" class="dlg scan">
+  <form method="dialog" onsubmit="return false">
+    <div class="scan-head"><h3>Scan Dokumen</h3><span class="muted small" id="scanCount"></span><span class="grow"></span><button type="button" class="icon-btn" onclick="this.closest('dialog').close()" title="Tutup"><svg class="ic"><use href="#i-x"/></svg></button></div>
+    <div class="scan-main">
+      <div class="scan-live" id="scanLive">
+        <div class="scan-video"><video id="scanVideo" playsinline muted></video><div class="scan-flash" id="scanFlash"></div><p class="scan-msg" id="scanCamMsg" hidden></p></div>
+        <div class="row center">
+          <select id="scanCam" hidden aria-label="Pilih kamera"></select>
+          <button type="button" class="btn primary" id="scanShot" disabled><svg class="ic"><use href="#i-camera"/></svg>Ambil foto</button>
+          <button type="button" class="btn" id="scanPick"><svg class="ic"><use href="#i-image"/></svg>Pilih foto…</button>
+          <input type="file" id="scanFile" accept="image/*" multiple hidden>
+        </div>
+        <p class="muted small center-text">Letakkan kertas di permukaan gelap dengan cahaya cukup. Bisa juga memilih foto dari HP atau hasil scanner.</p>
+      </div>
+      <div class="scan-edit" id="scanEdit" hidden>
+        <div class="scan-editbox" id="scanEditBox"><canvas id="scanCanvas"></canvas></div>
+        <p class="muted small" id="scanEditInfo"></p>
+        <div class="row">
+          <button type="button" class="btn sm" id="scanBack"><svg class="ic"><use href="#i-camera"/></svg>Tambah halaman</button>
+          <span class="grow"></span>
+          <label class="field inline"><span>Filter</span><select id="scanFilter"></select></label>
+          <button type="button" class="btn sm" id="scanAuto" title="Deteksi tepi otomatis"><svg class="ic"><use href="#i-scan"/></svg>Auto</button>
+          <button type="button" class="btn sm" id="scanFull" title="Pakai seluruh foto"><svg class="ic"><use href="#i-fit-page"/></svg>Penuh</button>
+          <button type="button" class="btn sm" id="scanRotL" title="Putar kiri"><svg class="ic"><use href="#i-rotate-ccw"/></svg></button>
+          <button type="button" class="btn sm" id="scanRotR" title="Putar kanan"><svg class="ic"><use href="#i-rotate-cw"/></svg></button>
+          <button type="button" class="btn sm" id="scanLeft" title="Geser ke kiri"><svg class="ic"><use href="#i-left"/></svg></button>
+          <button type="button" class="btn sm" id="scanRight" title="Geser ke kanan"><svg class="ic"><use href="#i-right"/></svg></button>
+          <button type="button" class="btn sm danger" id="scanDel"><svg class="ic"><use href="#i-trash"/></svg>Hapus</button>
+        </div>
+      </div>
+    </div>
+    <div class="scan-strip" id="scanStrip"></div>
+    <div class="dlg-actions">
+      <label class="field inline left"><span>Hasil</span><select id="scanMode"></select></label>
+      <label class="field inline"><span>Ukuran</span><select id="scanPaper"><option value="a4">A4</option><option value="letter">Letter</option><option value="f4">F4 / Folio</option><option value="fit">Sesuai foto</option></select></label>
+      <button type="button" class="btn" onclick="this.closest('dialog').close()">Batal</button>
+      <button type="button" class="btn primary" id="scanDone" disabled>Jadikan PDF</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Security -->
+<dialog id="dlgSecurity" class="dlg">
+  <form method="dialog">
+    <h3>Kata Sandi &amp; Keamanan</h3>
+    <label class="chk"><input type="checkbox" id="secOn"> Kunci dokumen dengan kata sandi (AES-256)</label>
+    <div class="sec-body" style="display:flex;flex-direction:column;gap:10px">
+      <label class="field"><span>Kata sandi untuk membuka</span><input type="password" id="secPw" autocomplete="new-password"></label>
+      <label class="field"><span>Ulangi kata sandi</span><input type="password" id="secPw2" autocomplete="new-password"></label>
+      <label class="field"><span>Kata sandi pemilik (opsional, untuk mengubah izin)</span><input type="password" id="secOwner" autocomplete="new-password"></label>
+      <div class="row">
+        <label class="chk"><input type="checkbox" id="secPrint" checked> Izinkan cetak</label>
+        <label class="chk"><input type="checkbox" id="secCopy" checked> Izinkan salin teks</label>
+        <label class="chk"><input type="checkbox" id="secModify" checked> Izinkan ubah</label>
+      </div>
+    </div>
+    <p class="muted small">Berlaku saat dokumen disimpan. Jangan lupa kata sandinya — tidak bisa dipulihkan.</p>
+    <div class="dlg-actions"><button value="cancel" class="btn">Batal</button><button value="ok" class="btn primary">Terapkan</button></div>
+  </form>
+</dialog>
+
+<!-- Form fill -->
+<dialog id="dlgForm" class="dlg wide">
+  <form method="dialog">
+    <h3>Isi Formulir</h3>
+    <div id="formFields" class="form-fields"></div>
+    <div class="dlg-actions">
+      <label class="chk left"><input type="checkbox" id="formFlatten"> Ratakan (kunci isian, tidak bisa diubah lagi)</label>
+      <button value="cancel" class="btn">Batal</button>
+      <button value="ok" class="btn primary" id="formApply">Terapkan</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Default app -->
+<dialog id="dlgDefault" class="dlg wide">
+  <form method="dialog">
+    <h3>Jadikan KLM PDF aplikasi default</h3>
+    <div class="steps" id="defaultSteps"></div>
+    <div class="dlg-actions">
+      <button type="button" class="btn" id="btnOpenDefaults" hidden>Buka Pengaturan Default Windows</button>
+      <button value="cancel" class="btn primary">Mengerti</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Shortcuts -->
+<dialog id="dlgKeys" class="dlg">
+  <form method="dialog">
+    <h3>Pintasan Keyboard</h3>
+    <div class="keys">
+      <div><kbd>Ctrl+O</kbd>Buka file</div><div><kbd>Ctrl+S</kbd>Simpan</div>
+      <div><kbd>Ctrl+Shift+S</kbd>Simpan sebagai</div><div><kbd>Ctrl+P</kbd>Cetak</div>
+      <div><kbd>Ctrl+F</kbd>Cari</div><div><kbd>Ctrl+Z / Y</kbd>Urungkan / ulangi</div>
+      <div><kbd>Ctrl + / −</kbd>Zoom</div><div><kbd>Ctrl+0</kbd>Paskan halaman</div>
+      <div><kbd>Ctrl+W</kbd>Tutup tab</div><div><kbd>Ctrl+Tab</kbd>Tab berikutnya</div>
+      <div><kbd>V</kbd>Pilih</div><div><kbd>H</kbd>Geser (atau tahan Spasi)</div>
+      <div><kbd>E</kbd>Edit teks</div><div><kbd>T</kbd>Tambah teks</div>
+      <div><kbd>L</kbd>Sorot</div><div><kbd>P</kbd>Pena</div>
+      <div><kbd>R / O / A</kbd>Kotak / lingkaran / panah</div><div><kbd>W</kbd>Penghapus putih</div>
+      <div><kbd>N</kbd>Catatan</div><div><kbd>S</kbd>Tanda tangan</div>
+      <div><kbd>Del</kbd>Hapus objek terpilih</div><div><kbd>Ctrl+D</kbd>Duplikat objek</div>
+      <div><kbd>Panah</kbd>Geser objek (Shift = 10)</div><div><kbd>Esc</kbd>Batal / kembali ke Pilih</div>
+      <div><kbd>F4</kbd>Panel halaman</div><div><kbd>Home / End</kbd>Halaman pertama / terakhir</div>
+    </div>
+    <div class="dlg-actions"><button value="cancel" class="btn primary">Tutup</button></div>
+  </form>
+</dialog>
+
+<!-- About -->
+<dialog id="dlgAbout" class="dlg">
+  <form method="dialog">
+    <div class="about">
+      <img src="icons/icon-128.png" width="72" height="72" alt="">
+      <h3>KLM PDF</h3>
+      <p class="muted" id="aboutVer">Versi 1.3.0</p>
+      <p>Pembaca &amp; editor PDF offline. Semua file diproses di perangkat Anda — tidak ada yang diunggah.</p>
+      <p class="muted small">Dibangun dengan PDF.js (Mozilla, Apache-2.0), pdf-lib (MIT), JSZip (MIT), dan huruf Liberation (SIL OFL 1.1).</p>
+    </div>
+    <div class="dlg-actions"><button value="cancel" class="btn primary">Tutup</button></div>
+  </form>
+</dialog>
+
+<script src="lib/pdf-lib.min.js"></script>
+<script src="lib/jszip.min.js"></script>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
